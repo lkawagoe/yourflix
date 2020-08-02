@@ -27,6 +27,16 @@ const Container = styled.ul`
   }
 `;
 
+const SliderComponent = styled(SlickSlider)`
+  margin-bottom: 40px;
+  .slick-arrow{
+    &:before{
+      color:${props => props.categoryColor};
+    }
+  }
+`;
+
+
 export const SliderItem = styled.li`
   margin-right: 16px;
   img {
@@ -38,9 +48,9 @@ export const SliderItem = styled.li`
 `;
 
 
-const Slider = ({ children }) => (
+const Slider = ({ children, categoryColor }) => (
   <Container>
-    <SlickSlider {...{
+    <SliderComponent categoryColor={categoryColor} {...{
       dots: false,
       infinite: false,
       speed: 300,
@@ -50,7 +60,7 @@ const Slider = ({ children }) => (
     }}
     >
       {children}
-    </SlickSlider>
+    </SliderComponent>
   </Container>
 );
 
