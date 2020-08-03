@@ -16,8 +16,8 @@
     "styled-components": "^5.1.1"
   },
   "scripts": {
-    "start": "node ./server.js",
-    "server": "json-server --watch db.json",
+    "server": "node ./server.js",
+    "start": "npm run server",
     "dev": "concurrently \"react-scripts start\" \"node ./server.js\"",    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
