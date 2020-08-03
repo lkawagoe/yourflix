@@ -30,7 +30,7 @@ function CadastroCategoria() {
 
   useEffect(() => {
     console.log('hello world!');
-    const URL_TOP = 'http://localhost:3000/categorias';
+    const URL_TOP = 'https://your-flix.herokuapp.com/categorias';
     fetch(URL_TOP)
       .then(async (respostaDoServidor) => {
         const resposta = await respostaDoServidor.json();
