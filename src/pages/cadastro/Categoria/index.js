@@ -3,34 +3,24 @@ import { Link } from 'react-router-dom';
 import PageDefault from '../../../components/PageDefault';
 import FormField from '../../../components/FormField';
 import Button from '../../../components/Button';
+import useForm from '../../../hooks/useForm';
 
 function CadastroCategoria() {
-  const valoreIniciais = {
+  const valoresIniciais = {
     nome: '',
     descricao: '',
     cor: '',
   };
-  const [categorias, setCategorias] = useState(['teste']);
-  const [values, setValues] = useState(valoreIniciais);
 
-  function setValue(chave, valor) {
-    setValues({
-      ...values,
-      [chave]: valor,
-    });
-  }
+  const { handleChange, values, clearForm } = useForm(valoresIniciais);
 
-  function handleChange(infosDoEvento) {
-    const { name, value } = infosDoEvento.target;
-    setValue(
-      name,
-      value,
-    );
-  }
+  const [categorias, setCategorias] = useState([]);
 
   useEffect(() => {
-    console.log('hello world!');
-    const URL_TOP = 'https://your-flix.herokuapp.com/categorias';
+    const URL_TOP = window.location.hostname.includes('localhost')
+      ? 'http://localhost:8080/categorias'
+      : 'https://your-flix.herokuapp.com/categorias';
+    // E a ju ama variáveis
     fetch(URL_TOP)
       .then(async (respostaDoServidor) => {
         const resposta = await respostaDoServidor.json();
@@ -39,25 +29,23 @@ function CadastroCategoria() {
         ]);
       });
 
-
-
-  //   setTimeout(() => {
-  //     setCategorias([
-  //       ...categorias,
-  //       {
-  //         id: 1,
-  //         nome: 'Front End',
-  //         descricao: 'Categoria Aleatória',
-  //         cor: '#cbd1ff',
-  //       },
-  //       {
-  //         id: 2,
-  //         nome: 'Back End',
-  //         descricao: 'Aquela Categoria Aleatória',
-  //         cor: '#cbd1ff',
-  //       },
-  //     ]);
-  //   }, 4 * 1000);
+    // setTimeout(() => {
+    //   setCategorias([
+    //     ...categorias,
+    //     {
+    //       id: 1,
+    //       nome: 'Front End',
+    //       descricao: 'Uma categoria bacanudassa',
+    //       cor: '#cbd1ff',
+    //     },
+    //     {
+    //       id: 2,
+    //       nome: 'Back End',
+    //       descricao: 'Outra categoria bacanudassa',
+    //       cor: '#cbd1ff',
+    //     },
+    //   ]);
+    // }, 4 * 1000);
   }, []);
 
   return (
@@ -74,13 +62,12 @@ function CadastroCategoria() {
           values,
         ]);
 
-        setValues(valoreIniciais);
+        clearForm();
       }}
       >
 
         <FormField
           label="Nome da Categoria"
-          type="text"
           name="nome"
           value={values.nome}
           onChange={handleChange}
@@ -109,14 +96,15 @@ function CadastroCategoria() {
 
       {categorias.length === 0 && (
         <div>
+          {/* Cargando... */}
           Loading...
         </div>
       )}
 
       <ul>
-        {categorias.map((categoria, i) => (
-          <li key={`${categoria}${i}`}>
-            {categoria.nome}
+        {categorias.map((categoria) => (
+          <li key={`${categoria.titulo}`}>
+            {categoria.titulo}
           </li>
         ))}
       </ul>
